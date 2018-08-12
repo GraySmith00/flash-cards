@@ -20,6 +20,14 @@ class AddCardForm extends Component {
       showAnswer: false
     };
     this.props.addCardToDeck(newCard);
+    this.resetInputs();
+  };
+
+  resetInputs = () => {
+    this.setState({
+      front: '',
+      back: ''
+    });
   };
 
   render() {
@@ -30,12 +38,14 @@ class AddCardForm extends Component {
           <input
             type="text"
             name="front"
+            value={this.state.front}
             onChange={this.handleChange}
             placeholder="front..."
           />
           <input
             type="text"
             name="back"
+            value={this.state.back}
             onChange={this.handleChange}
             placeholder="back..."
           />
