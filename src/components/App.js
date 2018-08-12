@@ -10,6 +10,15 @@ class App extends Component {
     currentDeck: {}
   };
 
+  componentDidMount() {
+    const decks = JSON.parse(localStorage.getItem('decks'));
+    if (decks) {
+      this.setState({
+        decks
+      });
+    }
+  }
+
   addDeck = newDeck => {
     const deckNameAlreadyExists = this.state.decks.find(
       deck => deck.name === newDeck.name
@@ -18,8 +27,12 @@ class App extends Component {
       this.setState({
         decks: [...this.state.decks, newDeck]
       });
+      localStorage.setItem(
+        'decks',
+        JSON.stringify([...this.state.decks, newDeck])
+      );
     } else {
-      console.log('That deck already exists!');
+      alert('That deck already exists!');
     }
   };
 

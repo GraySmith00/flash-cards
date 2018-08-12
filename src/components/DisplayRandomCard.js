@@ -26,8 +26,6 @@ class DisplayRandomCard extends Component {
   };
 
   render() {
-    console.log(this.state.currentCard.showAnswer);
-
     return (
       <div>
         <h3>DisplayRandomCard</h3>
