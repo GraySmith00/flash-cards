@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import AddDeck from './AddDeck';
 import AddCardForm from './AddCardForm';
 import '../css/App.css';
+import DisplayRandomCard from './DisplayRandomCard';
 
 class App extends Component {
   state = {
@@ -40,19 +41,30 @@ class App extends Component {
   };
 
   render() {
+    const { currentDeck } = this.state;
+
     const currDeckOptions = this.state.decks.map((deck, i) => (
       <option key={i} value={deck.name}>
         {deck.name}
       </option>
     ));
 
+    let cardDisplay;
+
+    if (currentDeck.cards && currentDeck.cards.length > 0) {
+      cardDisplay = <DisplayRandomCard currentDeck={this.state.currentDeck} />;
+    }
     return (
       <div className="App">
+        <h1>Welcome to Flashcards!</h1>
         <AddDeck addDeck={this.addDeck} />
         <select name="currentDeck" onChange={this.selectCurrentDeck}>
           {currDeckOptions}
         </select>
-        <AddCardForm addCardToDeck={this.addCardToDeck} />
+        {currentDeck.cards && (
+          <AddCardForm addCardToDeck={this.addCardToDeck} />
+        )}
+        {cardDisplay}
       </div>
     );
   }
