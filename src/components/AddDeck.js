@@ -18,6 +18,10 @@ class AddDeck extends Component {
       cards: []
     };
     this.props.addDeck(deck);
+    this.resetInputs();
+  };
+
+  resetInputs = () => {
     this.setState({
       inputValue: ''
     });
@@ -27,7 +31,12 @@ class AddDeck extends Component {
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
-          <input type="text" name="inputValue" onChange={this.onChange} />
+          <input
+            type="text"
+            name="inputValue"
+            value={this.state.inputValue}
+            onChange={this.onChange}
+          />
           <input type="submit" />
         </form>
       </div>
