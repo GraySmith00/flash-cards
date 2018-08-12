@@ -36,6 +36,7 @@ class AddDeck extends Component {
             name="inputValue"
             value={this.state.inputValue}
             onChange={this.onChange}
+            placeholder="Add a new deck..."
           />
           <input type="submit" />
         </form>

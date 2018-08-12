@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import AddDeck from './AddDeck';
+import AddCardForm from './AddCardForm';
 import '../css/App.css';
 
 class App extends Component {
@@ -30,6 +31,14 @@ class App extends Component {
     });
   };
 
+  addCardToDeck = newCard => {
+    const newCurrentDeck = { ...this.state.currentDeck };
+    newCurrentDeck.cards.push(newCard);
+    this.setState({
+      currentDeck: newCurrentDeck
+    });
+  };
+
   render() {
     const currDeckOptions = this.state.decks.map((deck, i) => (
       <option key={i} value={deck.name}>
@@ -43,6 +52,7 @@ class App extends Component {
         <select name="currentDeck" onChange={this.selectCurrentDeck}>
           {currDeckOptions}
         </select>
+        <AddCardForm addCardToDeck={this.addCardToDeck} />
       </div>
     );
   }
