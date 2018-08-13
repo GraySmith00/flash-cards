@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+
 import AddDeck from './AddDeck';
 import AddCardForm from './AddCardForm';
 import '../css/App.css';
@@ -17,6 +18,17 @@ class App extends Component {
         decks
       });
     }
+
+    const currentDeck = JSON.parse(localStorage.getItem('currentDeck'));
+    if (currentDeck) {
+      this.setState({
+        currentDeck
+      });
+    }
+  }
+
+  setLocalStorage(key, arg) {
+    localStorage.setItem(key, JSON.stringify(arg));
   }
 
   addDeck = newDeck => {
@@ -25,12 +37,10 @@ class App extends Component {
     );
     if (!deckNameAlreadyExists) {
       this.setState({
-        decks: [...this.state.decks, newDeck]
+        decks: [...this.state.decks, newDeck],
+        currentDeck: newDeck
       });
-      localStorage.setItem(
-        'decks',
-        JSON.stringify([...this.state.decks, newDeck])
-      );
+      this.setLocalStorage('decks', [...this.state.decks, newDeck]);
     } else {
       alert('That deck already exists!');
     }
@@ -43,6 +53,7 @@ class App extends Component {
     this.setState({
       currentDeck
     });
+    this.setLocalStorage('currentDeck', this.state.currentDeck);
   };
 
   addCardToDeck = newCard => {
@@ -51,9 +62,11 @@ class App extends Component {
     this.setState({
       currentDeck: newCurrentDeck
     });
+    this.setLocalStorage('decks', this.state.decks);
   };
 
   render() {
+    console.log(this.state.decks);
     const { currentDeck } = this.state;
 
     const currDeckOptions = this.state.decks.map((deck, i) => (
@@ -71,7 +84,11 @@ class App extends Component {
       <div className="App">
         <h1>Welcome to Flashcards!</h1>
         <AddDeck addDeck={this.addDeck} />
-        <select name="currentDeck" onChange={this.selectCurrentDeck}>
+        <select
+          name="currentDeck"
+          onChange={this.selectCurrentDeck}
+          value={this.state.currentDeck.name}
+        >
           {currDeckOptions}
         </select>
         {currentDeck.cards && (
